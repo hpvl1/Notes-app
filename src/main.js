@@ -6,6 +6,8 @@ import { createApolloClient } from '@nhost/apollo';
 import { NhostClient } from '@nhost/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 
+import router from './router';
+
 const nhost = new NhostClient({
   subdomain: 'gnmhtflmezlvrmictnjt',
   region: 'eu-central-1',
@@ -13,4 +15,4 @@ const nhost = new NhostClient({
 
 const apolloClient = createApolloClient({ nhost });
 
-createApp(App).provide(DefaultApolloClient, apolloClient).use(nhost).mount('#app');
+createApp(App).provide(DefaultApolloClient, apolloClient).use(nhost).use(router).mount('#app');
