@@ -15,4 +15,9 @@ const nhost = new NhostClient({
 
 const apolloClient = createApolloClient({ nhost });
 
-createApp(App).provide(DefaultApolloClient, apolloClient).use(nhost).use(router).mount('#app');
+const app = createApp(App);
+
+app.provide(DefaultApolloClient, apolloClient);
+app.use(nhost);
+app.use(router);
+app.mount('#app');
