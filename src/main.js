@@ -21,3 +21,14 @@ app.provide(DefaultApolloClient, apolloClient);
 app.use(nhost);
 app.use(router);
 app.mount('#app');
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const isAuthenticated = await nhost.auth.isAuthenticatedAsync();
+
+    if (!isAuthenticated) {
+      return next('/login');
+    }
+  }
+  next();
+});

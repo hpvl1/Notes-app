@@ -19,15 +19,4 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const isAuthenticated = await nhost.auth.isAuthenticatedAsync();
-
-    if (!isAuthenticated) {
-      return next('/login');
-    }
-  }
-  next();
-});
-
 export default router;
