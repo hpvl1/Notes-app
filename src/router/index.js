@@ -8,10 +8,26 @@ const router = createRouter({
       name: 'Home',
       component: () => import('../pages/Home.vue'),
       meta: {
-        protected: true,
-      }
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../pages/Login.vue'),
     },
   ],
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    const isAuthenticated = await nhost.auth.isAuthenticatedAsync();
+
+    if (!isAuthenticated) {
+      return next('/login');
+    }
+  }
+  next();
 });
 
 export default router;
